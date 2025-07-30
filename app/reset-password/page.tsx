@@ -11,6 +11,7 @@ function Page() {
     e.preventDefault();
 
     if (!email) return alert('Please enter your email.');
+    if(email.indexOf('@') == -1) return alert('Enter a valid email');//??
 
     const { error } = await supabase.auth.resetPasswordForEmail(email);
 
