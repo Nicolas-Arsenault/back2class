@@ -1,0 +1,53 @@
+'use server';
+
+import { revalidatePath } from "next/cache";
+import {redirect} from 'next/navigation';
+
+import { createClient } from "@/utils/supabase/server";
+
+export async function login(formData: FormData){
+  const supabase = await createClient();
+
+  const data = {
+    email: formData.get('email') as string,
+    password: formData.get('password') as string,
+  }
+
+  const {error} = await supabase.auth.signInWithPassword(data);
+
+  if(error){
+    return {error:error.message}
+  }
+
+  revalidatePath('/','layout');
+  redirect('/home');
+}
+
+export async function signup(formData:FormData)
+{
+  const supabase = await createClient();
+
+  const data = {
+    email: formData.get('email') as string,
+    password: formData.get('password') as string,
+    repetedPass: formData.get('repetedPass') as string
+  }
+
+  if(data.repetedPass != data.password)
+  {
+    
+    return {error:"Les mots de passe ne correspondent pas."};
+  }
+
+  const {error} = await supabase.auth.signUp(data);
+
+  if(error)
+  {
+    
+    return {error:error.message};
+  }
+
+
+  return {success:"Inscription reussite. Veuillez regarder vos emails pour un lien de confirmation."};
+
+}
