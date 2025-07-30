@@ -22,7 +22,7 @@ function Page() {
   };
 
   return (
-    <div>
+    <div className='flex flex-col'>
       <form onSubmit={handleReset}>
         <input
           placeholder="email"
@@ -32,6 +32,7 @@ function Page() {
         />
         <button type="submit">Reset Password</button>
       </form>
+      <a href='/'>Retourner au menu</a>
     </div>
   );
 }

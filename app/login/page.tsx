@@ -48,6 +48,7 @@ function page() {
       <button type='submit'>Connexion</button>
       <div className='flex flex-col'>
         <a href='/register'>Vous n'avez pas de compte? Cliquez ici.</a>
+        <a href='/reset-password'>Oubli/e votre mot de passe?</a>
         {error && <p className='text-red-500'>{error}</p>}
       </div>
     </form>

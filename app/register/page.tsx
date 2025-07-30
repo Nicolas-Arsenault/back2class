@@ -71,6 +71,7 @@ export default function register() {
       <button type="submit">S'inscrire</button>
       <div className='flex flex-col'>
         <a href='/login'>Vous avez deja un compte? Cliquez ici.</a>
+        <a href='/reset-password'>Oubli/e votre mot de passe?</a>
         {error && <p className='text-red-600'>{error}</p>}
         {success &&<p className='text-green-500'>{success}</p>}
       </div>
