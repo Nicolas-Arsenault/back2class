@@ -31,8 +31,9 @@ export default function register() {
 
   return (
     <form onSubmit={handleSubmit}>
+      
       <input name="email" type="text" placeholder="email" required />
-
+      
       <div>
         <input
           name="password"
@@ -54,7 +55,7 @@ export default function register() {
 
       <div>
         <input
-          name="repetedPass"
+          name="repeatedPass"
           type={showRepeated ? 'text' : 'password'}
           placeholder="répéter le mot de passe"
           required
