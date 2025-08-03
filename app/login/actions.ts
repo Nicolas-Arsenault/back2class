@@ -26,6 +26,7 @@ export async function login(formData: FormData){
 export async function signup(formData:FormData)
 {
   const supabase = await createClient();
+  const username = formData.get('username') as string;
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
   const repeatedPass = formData.get('repeatedPass') as string;
@@ -36,18 +37,17 @@ export async function signup(formData:FormData)
     return {error:"Les mots de passe ne correspondent pas."};
   }
 
-  if(!email.includes("@cegepsi.ca"))
+  if(!email.includes("@"))
   {
-    return{error:"Addresse du cegep de sept iles invalide! Veuillez utiliser une adresse finissant par @cegepsi.ca"};
+    return{error:"Addresse courrielle invalide! Veuillez utiliser une adresse valide."};
   }
 
-  const displayName = email.split('.')[0];
   const {error} = await supabase.auth.signUp({
     email:email,
     password:password,
     options:{
       data:{
-        displayName:displayName
+        displayName:username
       }
     }
   });
