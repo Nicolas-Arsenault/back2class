@@ -6,15 +6,15 @@ import { useRouter } from 'next/navigation';
 function Page() {
     const router = useRouter();
     const [countdown, setCountdown] = useState(5);
+    const [shouldRedirect, setShouldRedirect] = useState(false);
 
+    // Handle countdown
     useEffect(() => {
-        // Start countdown
         const countdownTimer = setInterval(() => {
             setCountdown((prev) => {
                 if (prev <= 1) {
                     clearInterval(countdownTimer);
-                    // Redirect to login page instead of home
-                    router.push('/login');
+                    setShouldRedirect(true);
                     return 0;
                 }
                 return prev - 1;
@@ -24,7 +24,18 @@ function Page() {
         return () => {
             clearInterval(countdownTimer);
         };
-    }, [router]); // Added dependency array
+    }, []); // No dependencies needed
+
+    // Handle redirect when countdown reaches 0
+    useEffect(() => {
+        if (shouldRedirect) {
+            const redirectTimer = setTimeout(() => {
+                router.push('/login');
+            }, 1000); // Small delay to ensure state updates are complete
+
+            return () => clearTimeout(redirectTimer);
+        }
+    }, [shouldRedirect, router]);
     
     return (
         <div className="min-h-screen bg-gradient-to-br from-green-50 to-white flex items-center justify-center px-4">
