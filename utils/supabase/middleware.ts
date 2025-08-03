@@ -37,23 +37,39 @@ export default async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
+  // Pages that don't require authentication
+  const publicPages = [
+    '/login',
+    '/register', 
+    '/reset-password',
+    '/update-password',
+    '/verified',
+    '/auth/confirm'
+  ];
+
+  const isPublicPage = publicPages.some(page => 
+    request.nextUrl.pathname.startsWith(page) || request.nextUrl.pathname === page
+  );
+
+  // Redirect unauthenticated users to login (except for public pages)
   if (
     !user &&
-    !request.nextUrl.pathname.startsWith('/login') && !request.nextUrl.pathname.startsWith('/register') && request.nextUrl.pathname !== '/' && !request.nextUrl.pathname.startsWith('/reset-password')
-    && !request.nextUrl.pathname.startsWith('/auth/confirm')
+    !isPublicPage &&
+    request.nextUrl.pathname !== '/'
   ) {
-    // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone()
     url.pathname = '/login'
-   
     return NextResponse.redirect(url)
   }
 
-  if(user && (request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/register') || request.nextUrl.pathname === '/'))
-  {
+  // Redirect authenticated users away from auth pages to home
+  if (user && (
+    request.nextUrl.pathname.startsWith('/login') || 
+    request.nextUrl.pathname.startsWith('/register') || 
+    request.nextUrl.pathname === '/'
+  )) {
     const url = request.nextUrl.clone();
     url.pathname = '/home';
-
     return NextResponse.redirect(url);
   }
 

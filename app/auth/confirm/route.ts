@@ -15,12 +15,32 @@ export async function GET(request: NextRequest) {
   if (token_hash && type) {
     const supabase = await createClient()
 
-    const { error } = await supabase.auth.verifyOtp({
-      type,
-      token_hash,
-    })
-    if (!error) {
-      return NextResponse.redirect(redirectTo)
+    // For email verification (signup), we don't want to log the user in
+    if (type === 'signup') {
+      // Use verifyOtp for email verification without creating a session
+      const { error } = await supabase.auth.verifyOtp({
+        type,
+        token_hash,
+      })
+      
+      if (!error) {
+        // Sign out the user immediately after verification to prevent auto-login
+        await supabase.auth.signOut()
+        
+        // Redirect to verified page for email verification
+        redirectTo.pathname = '/verified'
+        return NextResponse.redirect(redirectTo)
+      }
+    } else {
+      // For password reset and other OTP types, use normal flow
+      const { error } = await supabase.auth.verifyOtp({
+        type,
+        token_hash,
+      })
+      
+      if (!error) {
+        return NextResponse.redirect(redirectTo)
+      }
     }
   }
 
