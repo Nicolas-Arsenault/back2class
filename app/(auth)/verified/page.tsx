@@ -64,12 +64,12 @@ function Page() {
                     <p className="text-sm text-gray-600">
                         Si vous n'êtes pas redirigé automatiquement, cliquez sur le bouton ci-dessous:
                     </p>
-                    <Button 
-                        href={ROUTES.LOGIN}
-                        className="inline-block"
-                    >
-                        Aller à la connexion
-                    </Button>
+                    <a href={ROUTES.LOGIN}>
+                        <Button className="inline-block">
+                            Aller à la connexion
+                        </Button>
+                    </a>
+
                 </div>
             </div>
         </AuthLayout>

@@ -10,10 +10,12 @@ import { ROUTES } from '@/lib/constants';
 
 function Page() {
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
+    setIsLoading(true);
 
     const formData = new FormData(event.currentTarget);
     const result = await login(formData);
@@ -21,6 +23,8 @@ function Page() {
     if (result?.error) {
       setError(result.error);
     }
+
+    setIsLoading(false);
   };
 
   return (
@@ -48,7 +52,9 @@ function Page() {
           <Button 
             type="submit"
             className="w-full"
-            size="lg"
+            size="lg" 
+            disabled={isLoading}
+            isLoading={isLoading}
           >
             Se connecter
           </Button>
