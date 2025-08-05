@@ -1,5 +1,9 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Project
+
+This project is a market place web application using next js and supabase. It supports adding listings, pictures, auth and real-time chat. There are also a couple of other features. This project was all built by myself -- alone. The app is still in development and not yet published, but we have a few interested users.
+
 ## Getting Started
 
 First, run the development server:
