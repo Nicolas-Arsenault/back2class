@@ -11,11 +11,13 @@ import { ROUTES, MESSAGES } from '@/lib/constants';
 export default function Page() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
     setSuccess(null);
+    setIsLoading(true);
 
     const formData = new FormData(event.currentTarget);
     const result = await signup(formData);
@@ -27,6 +29,8 @@ export default function Page() {
     if (result?.success) {
       setSuccess(result.success);
     }
+
+    setIsLoading(false);
   };
 
   return (
@@ -70,8 +74,10 @@ export default function Page() {
             type="submit"
             className="w-full"
             size="lg"
+            disabled={isLoading}
+            isLoading={isLoading}
           >
-            S'inscrire
+            {isLoading ? 'Envoi en cours...' : 'S\'inscrire'}
           </Button>
 
           {success && (

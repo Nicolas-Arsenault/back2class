@@ -31,6 +31,8 @@ export async function signup(formData:FormData)
   const password = formData.get('password') as string;
   const repeatedPass = formData.get('repeatedPass') as string;
   
+
+//add checks for length etc.. characters
   if(repeatedPass != password)
   {
     
