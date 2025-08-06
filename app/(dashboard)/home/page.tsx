@@ -34,6 +34,9 @@ function Page() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-white">
       <div className="max-w-4xl mx-auto px-6 py-12">
+        //make a navigation on the left (do in layout)
+         //make a search menu to the right with filters by book types and prices
+         //list all the items in the middle
           <RoundButton size='lg'>+</RoundButton>
       </div>
     </div>
