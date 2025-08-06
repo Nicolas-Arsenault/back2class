@@ -25,6 +25,7 @@ export const PUBLIC_ROUTES = [
 
 // Auth constants
 export const AUTH = {
+  EMAIL_UNIQUE_FUNCTION:'is_email_exist',
   MIN_PASSWORD_LENGTH: 6,
   VERIFICATION_REDIRECT_DELAY: 5000, // 5 seconds
   PASSWORD_UPDATE_REDIRECT_DELAY: 2000, // 2 seconds

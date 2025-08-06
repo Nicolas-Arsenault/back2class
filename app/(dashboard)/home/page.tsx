@@ -2,9 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
-import Card from '@/components/ui/Card';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
-import { APP_NAME } from '@/lib/constants';
+import RoundButton from '@/components/ui/RoundButton';
 
 function Page() {
   const [user, setUser] = useState<any>(null);
@@ -35,18 +34,10 @@ function Page() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-white">
       <div className="max-w-4xl mx-auto px-6 py-12">
-        <Card variant="elevated" className="text-center">
-          <h1 className="text-3xl font-bold text-green-800 mb-4">Bienvenue!</h1>
-          {user ? (
-            <p className="text-gray-700 text-lg">
-              Bonjour, {user.user_metadata?.displayName || user.email}!
-            </p>
-          ) : (
-            <p className="text-gray-700 text-lg">
-              Vous êtes connecté avec succès.
-            </p>
-          )}
-        </Card>
+        //make a navigation on the left (do in layout)
+         //make a search menu to the right with filters by book types and prices
+         //list all the items in the middle
+          <RoundButton size='lg'>+</RoundButton>
       </div>
     </div>
   );
