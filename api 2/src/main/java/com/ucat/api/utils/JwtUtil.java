@@ -2,6 +2,7 @@ package com.ucat.api.utils;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +16,12 @@ public class JwtUtil {
     private String SECRET_KEY; //make it take from app properties
     @Value("${jwt.expiration}")
     private int EXPIRATION;
-    private final SecretKey key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    private SecretKey key;
+
+    @PostConstruct
+    public void init(){
+        key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    }
 
     public String generateToken(String username){
         return Jwts.builder()
