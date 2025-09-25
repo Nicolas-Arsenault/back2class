@@ -1,9 +1,6 @@
 package com.ucat.api.services;
 
-import com.ucat.api.dto.EmailRequest;
-import com.ucat.api.dto.LoginRequest;
-import com.ucat.api.dto.PasswordRecoveryRequest;
-import com.ucat.api.dto.SignUpRequest;
+import com.ucat.api.dto.*;
 import com.ucat.api.entities.User;
 import com.ucat.api.repositories.UserRepository;
 import com.ucat.api.utils.JwtUtil;
@@ -126,7 +123,53 @@ public class AuthService {
         return "Invalid email or password.";
     }
 
-    public String recoverPassword(PasswordRecoveryRequest req) {
-        return "Not implemented yet.";
+    public String resetPassword(PasswordResetRequest req) {
+        Optional<User> userOpt = userRepository.findByResetToken(req.getToken());
+        if (userOpt.isEmpty()) return "Invalid or expired token.";
+
+        User user = userOpt.get();
+
+        if (user.getResetTokenExpiry() == null || user.getResetTokenExpiry().isBefore(LocalDateTime.now())) {
+            return "Token expired. Please request a new one.";
+        }
+
+        user.setPassword(passwordEncoder.encode(req.getNewPassword()));
+        user.setResetToken(null);
+        user.setResetTokenExpiry(null);
+
+        userRepository.save(user);
+
+        return "Password successfully reset.";
     }
+
+    public String recoverPassword(PasswordRecoveryRequest req) {
+        Optional<User> userOpt = userRepository.findByEmail(req.getEmail());
+        if (userOpt.isEmpty()) return "If this email exists, a reset link will be sent.";
+
+        User user = userOpt.get();
+
+        // Rate limit: Allow only once every 2 minutes
+        if (user.getLastPasswordResetRequestedAt() != null) {
+            LocalDateTime lastSent = user.getLastPasswordResetRequestedAt();
+            if (lastSent.plusMinutes(2).isAfter(LocalDateTime.now())) {
+                return "You can only request a password reset once every 2 minutes.";
+            }
+        }
+
+        // Generate token and store expiry
+        String token = generateMagicToken();
+        user.setResetToken(token);
+        user.setResetTokenExpiry(LocalDateTime.now().plusMinutes(30));
+        user.setLastPasswordResetRequestedAt(LocalDateTime.now());
+
+        userRepository.save(user);
+
+        // Send email
+        String link = "http://localhost:8080/api/auth/reset-password?token=" + token;
+        smtpUtil.send(user.getEmail(), "Reset your password",
+                "Click this link to reset your password: " + link + "\nThis link expires in 30 minutes.");
+
+        return "If this email exists, a reset link will be sent.";
+    }
+
 }
