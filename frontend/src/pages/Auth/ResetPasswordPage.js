@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import AuthCard from '../components/AuthCard';
-import NotLoggedInHeader from '../components/NotLoggedInHeader';
-import PasswordInput from '../components/PasswordInput';
-import AuthButton from '../components/AuthButton';
+import AuthCard from '../../components/Auth/AuthCard';
+import NotLoggedInHeader from '../../components/NotLoggedInHeader';
+import PasswordInput from '../../components/Auth/PasswordInput';
+import AuthButton from '../../components/Auth/AuthButton';
 
 function ResetPasswordPage() {
   const [searchParams] = useSearchParams();

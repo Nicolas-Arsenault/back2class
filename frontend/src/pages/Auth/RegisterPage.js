@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import NotLoggedInHeader from '../components/NotLoggedInHeader';
-import AuthCard from '../components/AuthCard';
-import EmailInput from '../components/EmailInput';
-import PasswordInput from '../components/PasswordInput';
-import AuthButton from '../components/AuthButton';
+import NotLoggedInHeader from '../../components/NotLoggedInHeader';
+import AuthCard from '../../components/Auth/AuthCard';
+import EmailInput from '../../components/Auth/EmailInput';
+import PasswordInput from '../../components/Auth/PasswordInput';
+import AuthButton from '../../components/Auth/AuthButton';
 
 function RegisterPage() {
   const [email, setEmail] = useState('');

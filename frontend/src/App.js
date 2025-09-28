@@ -1,22 +1,35 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LandingPage from "./pages/LandingPage";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import ForgotPasswordPage from "./pages/ForgotPasswordPage";
-import ResetPasswordPage from "./pages/ResetPasswordPage";
-import VerifyEmailPage from "./pages/VerifyEmailPage";
+import LandingPage from "./pages/Auth/LandingPage";
+import LoginPage from "./pages/Auth/LoginPage";
+import RegisterPage from "./pages/Auth/RegisterPage";
+import ForgotPasswordPage from "./pages/Auth/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/Auth/ResetPasswordPage";
+import VerifyEmailPage from "./pages/Auth/VerifyEmailPage";
+import ProtectedRoute from "./components/Security/ProtectedRoute";
+import DashboardPage from "./pages/App/DashboardPage";
+import AuthRedirectRoute from "./components/Security/AuthRedirectRoute";
 
 function App() {
   return(
     <Router>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={
+          <AuthRedirectRoute>
+            <LandingPage />
+          </AuthRedirectRoute>} />
+        <Route path="/login" element={
+          <AuthRedirectRoute>
+            <LoginPage />
+          </AuthRedirectRoute>} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage/>}/>
         <Route path="/verify-email" element={<VerifyEmailPage/>}/>
+        <Route path="/dashboard"
+        element={<ProtectedRoute>
+          <DashboardPage/>
+        </ProtectedRoute>}/>
       </Routes>
     </Router>
   )

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import EmailInput from '../components/EmailInput';
-import AuthButton from '../components/AuthButton';
+import EmailInput from '../../components/Auth/EmailInput';
+import AuthButton from '../../components/Auth/AuthButton';
 
 const VerifyEmailPage = () => {
   const [searchParams] = useSearchParams();

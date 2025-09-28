@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import AuthCard from '../components/AuthCard';
-import NotLoggedInHeader from '../components/NotLoggedInHeader';
-import EmailInput from '../components/EmailInput';
-import AuthButton from '../components/AuthButton';
+import AuthCard from '../../components/Auth/AuthCard';
+import NotLoggedInHeader from '../../components/NotLoggedInHeader';
+import EmailInput from '../../components/Auth/EmailInput';
+import AuthButton from '../../components/Auth/AuthButton';
 
 function ForgotPasswordPage() {
   const [email, setEmail] = useState('');

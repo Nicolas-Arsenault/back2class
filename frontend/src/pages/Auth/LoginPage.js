@@ -1,9 +1,9 @@
 import React, {useState} from "react";
-import NotLoggedInHeader from "../components/NotLoggedInHeader";
-import AuthCard from "../components/AuthCard";
-import AuthButton from "../components/AuthButton";
-import EmailInput from "../components/EmailInput";
-import PasswordInput from "../components/PasswordInput";
+import NotLoggedInHeader from "../../components/NotLoggedInHeader";
+import AuthCard from "../../components/Auth/AuthCard";
+import AuthButton from "../../components/Auth/AuthButton";
+import EmailInput from "../../components/Auth/EmailInput";
+import PasswordInput from "../../components/Auth/PasswordInput";
 
 const LoginPage = () => {
   const [email,setEmail] = useState('');
