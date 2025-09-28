@@ -6,6 +6,8 @@ import com.ucat.api.repositories.UserRepository;
 import com.ucat.api.utils.JwtUtil;
 import com.ucat.api.utils.SmtpUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -111,17 +113,25 @@ public class AuthService {
     }
 
     // Placeholder for login (you might want to rework this for JWT after email verification)
-    public String login(LoginRequest request) {
+
+    public LoginResponse login(LoginRequest request) {
         Optional<User> userOpt = userRepository.findByEmail(request.getEmail());
         if (userOpt.isPresent()) {
             User user = userOpt.get();
-            if (!user.isEmailVerified()) return "Please verify your email before logging in.";
+
+            if (!user.isEmailVerified()) {
+                throw new AccessDeniedException("Please verify your email before logging in.");
+            }
+
             if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-                return jwtUtil.generateToken(user.getUsername());
+                String token = jwtUtil.generateToken(user.getUsername());
+                return new LoginResponse("Login successful", token);
             }
         }
-        return "Invalid email or password.";
+
+        throw new BadCredentialsException("Invalid email or password.");
     }
+
 
     public String resetPassword(PasswordResetRequest req) {
         Optional<User> userOpt = userRepository.findByResetToken(req.getToken());
