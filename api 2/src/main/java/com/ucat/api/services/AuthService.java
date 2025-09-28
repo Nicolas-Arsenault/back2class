@@ -141,7 +141,7 @@ public class AuthService {
 
         userRepository.save(user);
 
-        String link = "http://localhost:8080/api/auth/reset-password?token=" + token;
+        String link = "http://localhost:3000/reset-password?token=" + token;
         smtpUtil.send(user.getEmail(), "Reset your password",
                 "Click this link to reset your password: " + link + "\nThis link expires in 30 minutes.");
 
