@@ -1,8 +1,10 @@
 package com.ucat.api.utils;
 
+import com.ucat.api.repositories.UserRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -17,11 +19,18 @@ public class JwtUtil {
     @Value("${jwt.expiration}")
     private int EXPIRATION;
     private SecretKey key;
+    @Autowired
+    private UserRepository userRepo;
 
     @PostConstruct
     public void init(){
         key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
+// Might need this for the frontend... dont know yet.
+//    public boolean userExists(String token){
+//        String username = extractUsername(token);
+//        return userRepo.findByUsername(username).isPresent();
+//    }
 
     public String generateToken(String username){
         return Jwts.builder()

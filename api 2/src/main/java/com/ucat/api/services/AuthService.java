@@ -23,7 +23,7 @@ public class AuthService {
     private final SmtpUtil smtpUtil;
 
     private static final int MAGIC_LINK_EXPIRATION_MINUTES = 15;
-    private static final int MAGIC_LINK_RESEND_COOLDOWN_SECONDS = 120;
+    private static final int MAGIC_LINK_RESEND_COOLDOWN_SECONDS = 30;
 
     private String generateMagicToken() {
         return UUID.randomUUID().toString();
