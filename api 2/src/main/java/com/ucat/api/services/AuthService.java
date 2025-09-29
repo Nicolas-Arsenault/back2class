@@ -93,6 +93,16 @@ public class AuthService {
         return new ApiResponse(true, "Email successfully verified!", null);
     }
 
+    public ApiResponse verifyToken(String token){
+        String username = jwtUtil.extractUsername(token);
+        if(userRepository.findByUsername(username).isPresent()){
+            if(jwtUtil.validateToken(token,username)){
+                return new ApiResponse(true, "Token is valid!", null);
+            }
+        }
+        return new ApiResponse(false, "Token is not valid.", null);
+    }
+
     public ApiResponse resendMagicLink(String email) {
         Optional<User> userOpt = userRepository.findByEmail(email);
         if (userOpt.isEmpty()) {
