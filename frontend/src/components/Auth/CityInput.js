@@ -7,7 +7,7 @@ function CityInput({value, onChange, text="Ville"}) {
         placeholder={text} 
         value={value}
         onChange={onChange}
-        className="border border-gray-300 rounded-md p-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+        className="border border-gray-300 rounded-md p-2 mb-4 focus:outline-none focus:ring-2 focus:ring-emerald-500"/>
     </div>
   )
 }

@@ -15,7 +15,7 @@ function RegisterPage() {
   const [message, setMessage] = useState(null);
   const [isError, setIsError] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const [checkBox, setCheckBox] = useState(false);
   const [showResend, setShowResend] = useState(false);
   const [cooldown, setCooldown] = useState(0);
 
@@ -26,6 +26,13 @@ function RegisterPage() {
     if (password !== passwordConfirm) {
       setIsError(true);
       setMessage("Les mots de passe ne correspondent pas.");
+      return;
+    }
+
+    // check if tos accepted
+    if (!checkBox) {
+      setIsError(true);
+      setMessage("Vous devez accepter les termes et conditions.");
       return;
     }
 
@@ -101,7 +108,7 @@ function RegisterPage() {
             placeholder="Nom d'utilisateur"
             value={username}
             onChange={e => setUsername(e.target.value)}
-            className="border border-gray-300 rounded-md p-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-gray-300 rounded-md p-2 mb-4 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             required
           />
           <CityInput value={city} onChange={e => setCity(e.target.value)} />
@@ -112,33 +119,38 @@ function RegisterPage() {
             value={passwordConfirm}
             onChange={e => setPasswordConfirm(e.target.value)}
           />
-
+          <div className='text-left mb-4'>
+            <input type="checkbox" checked={checkBox} onChange={e => setCheckBox(e.target.checked)} className='mr-2 accent-emerald-600'/>
+            <label >
+              J'accepte les termes et conditions
+            </label>
+          </div>
           {message && (
-            <div className={`mt-5 text-sm mb-4 rounded p-2 ${isError ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"}`}>
+            <div className={`mt-2 text-sm mb-4 rounded p-2 ${isError ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"}`}>
               {message}
             </div>
           )}
 
-          <AuthButton text={loading ? "Signing up..." : "Sign up"} disabled={loading} />
+          <AuthButton text={loading ? "Création en cours..." : "Créer un compte"} disabled={loading} />
         </form>
 
           {showResend && (
             <p className="text-sm mt-2">
-              Didn't receive the verification email?{" "}
+              Vous n'avez pas reçu le courriel de vérification?{" "}
               <span
                 onClick={cooldown === 0 ? handleResend : null}
                 className={`underline cursor-pointer ${
-                  cooldown > 0 ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:text-blue-800'
+                  cooldown > 0 ? 'text-gray-400 cursor-not-allowed' : 'text-emerald-600 hover:text-emerald-800'
                 }`}
               >
-                Click here to resend {cooldown > 0 ? `(${cooldown}s)` : ''}
+                Cliquez ici pour renvoyer {cooldown > 0 ? `(${cooldown}s)` : ''}
               </span>
             </p>
           )}
 
-        <a href='/forgot-password' className='text-blue-600 mt-5'>Forgot password?</a>
+        <a href='/forgot-password' className='text-emerald-600 mt-5'>Mot de passe oublié?</a>
       </AuthCard>
-      <p className='mt-5'>Already have an account? <a className='text-blue-600' href='/login'>Sign in</a></p>
+      <p className='mt-5'>Vous avez déjà un compte? <a className='text-emerald-600' href='/login'>Se connecter</a></p>
     </div>
   );
 }

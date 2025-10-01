@@ -2,11 +2,10 @@ import React from 'react'
 
 function AuthButton({text, onClick}) {
   return (
-
     <button 
       onClick={onClick}
-      className="bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200">{text}</button>
-
+      className="bg-emerald-600 text-white py-2 rounded-md hover:bg-emerald-700 transition duration-200">{text}
+    </button>
   )
 }
 

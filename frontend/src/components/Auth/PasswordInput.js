@@ -12,7 +12,7 @@ function PasswordInput({ value, onChange, placeholderText = 'Mot de passe', text
           value={value}
           onChange={onChange}
           placeholder={placeholderText}
-          className="border border-gray-300 rounded-md p-2 w-full pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border border-gray-300 rounded-md p-2 w-full pr-12 focus:outline-none focus:ring-2 focus:ring-emerald-500"
         />
         <button
           type="button"

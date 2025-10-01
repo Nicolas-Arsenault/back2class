@@ -101,7 +101,7 @@ const LoginPage = () => {
           <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)} />
           <AuthButton onClick={handleLogin} text={"Se connecter"} />
           <div className="justify-center flex flex-row">
-            <a href="/forgot-password" className="text-blue-600 mt-5">Mot de passe oublié ?</a>
+            <a href="/forgot-password" className="text-emerald-600 mt-5">Mot de passe oublié ?</a>
           </div>
 
           {message && (
@@ -120,7 +120,7 @@ const LoginPage = () => {
               <span
                 onClick={cooldown === 0 ? handleResend : null}
                 className={`underline cursor-pointer ${
-                  cooldown > 0 ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:text-blue-800'
+                  cooldown > 0 ? 'text-gray-400 cursor-not-allowed' : 'text-emerald-600 hover:text-emerald-800'
                 }`}
               >
                 Cliquez ici pour renvoyer {cooldown > 0 ? `(${cooldown}s)` : ''}
@@ -131,7 +131,7 @@ const LoginPage = () => {
       </AuthCard>
 
       <p className="mt-5">
-        Pas encore membre? <a href="/register" className="text-blue-600">S'inscrire ici</a>
+        Pas encore membre? <a href="/register" className="text-emerald-600">S'inscrire ici</a>
       </p>
     </div>
   );

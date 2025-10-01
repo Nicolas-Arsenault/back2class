@@ -41,13 +41,13 @@ const LandingPage = () => {
         <div className="space-x-4">
           <Link
             to="/register"
-            className="px-6 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 text-lg"
+            className="px-6 py-3 text-white bg-emerald-600 rounded-lg hover:bg-emerald-700 text-lg"
           >
             S'inscrire
           </Link>
           <Link
             to="/login"
-            className="px-6 py-3 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 text-lg"
+            className="px-6 py-3 text-emerald-600 border border-emerald-600 rounded-lg hover:bg-emerald-50 text-lg"
           >
             Se connecter
           </Link>

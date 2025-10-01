@@ -61,7 +61,7 @@ function ForgotPasswordPage() {
 
       <p className='mt-5'>
         Vous avez déjà un compte ?{' '}
-        <a href='/login' className='text-blue-600'>Se connecter</a>
+        <a href='/login' className='text-emerald-600'>Se connecter</a>
       </p>
     </div>
   );
