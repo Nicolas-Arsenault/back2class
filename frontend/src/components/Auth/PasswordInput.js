@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function PasswordInput({ value, onChange, placeholderText = 'Password', text = "Password" }) {
+function PasswordInput({ value, onChange, placeholderText = 'Mot de passe', text = "Mot de passe" }) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (

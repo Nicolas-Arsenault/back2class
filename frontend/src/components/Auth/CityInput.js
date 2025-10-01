@@ -1,11 +1,9 @@
-import React from 'react'
-
-function EmailInput({value, onChange, text="Courriel"}) {
+function CityInput({value, onChange, text="Ville"}) {
   return (
     <div className='flex flex-col'>
       <label className="text-left mb-2 font-medium">{text}</label>
       <input 
-        type="email" 
+        type="text" 
         placeholder={text} 
         value={value}
         onChange={onChange}
@@ -14,4 +12,4 @@ function EmailInput({value, onChange, text="Courriel"}) {
   )
 }
 
-export default EmailInput
+export default CityInput

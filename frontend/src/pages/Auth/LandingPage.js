@@ -33,7 +33,7 @@ const LandingPage = () => {
       {/* Main Content */}
       <main className="flex flex-col items-center justify-center text-center px-4 py-20">
         <h1 className="text-4xl sm:text-5xl font-bold text-gray-800 mb-6">
-          Welcome to UCAT-Prep
+          Bienvenue à Livre pas cher
         </h1>
         <p className="text-lg text-gray-600 max-w-xl mb-10">
           Your journey to acing the UCAT starts here. Join us to access top-notch resources, practice tests, and expert tips to help you succeed.
@@ -43,13 +43,13 @@ const LandingPage = () => {
             to="/register"
             className="px-6 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 text-lg"
           >
-            Get Started
+            S'inscrire
           </Link>
           <Link
             to="/login"
             className="px-6 py-3 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 text-lg"
           >
-            Login
+            Se connecter
           </Link>
         </div>
       </main>

@@ -4,9 +4,11 @@ import AuthCard from '../../components/Auth/AuthCard';
 import EmailInput from '../../components/Auth/EmailInput';
 import PasswordInput from '../../components/Auth/PasswordInput';
 import AuthButton from '../../components/Auth/AuthButton';
+import CityInput from '../../components/Auth/CityInput';
 
 function RegisterPage() {
   const [email, setEmail] = useState('');
+  const [city, setCity] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -23,7 +25,7 @@ function RegisterPage() {
 
     if (password !== passwordConfirm) {
       setIsError(true);
-      setMessage("Passwords do not match.");
+      setMessage("Les mots de passe ne correspondent pas.");
       return;
     }
 
@@ -32,7 +34,7 @@ function RegisterPage() {
       const response = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, username, password })
+        body: JSON.stringify({ email, username, password, city })
       });
 
       const data = await response.json();
@@ -44,11 +46,11 @@ function RegisterPage() {
         startCooldown();
       } else {
         setIsError(true);
-        setMessage(data.message || 'Signup failed.');
+        setMessage(data.message || "Échec de l'inscription.");
       }
     } catch (err) {
       setIsError(true);
-      setMessage('Something went wrong. Please try again.');
+      setMessage("Une erreur est survenue. Veuillez réessayer.");
     }
     setLoading(false);
   };
@@ -71,7 +73,7 @@ function RegisterPage() {
       }
     } catch {
       setIsError(true);
-      setMessage("Error resending email.");
+      setMessage("Erreur lors de l'envoi du courriel de vérification.");
     }
   };
 
@@ -89,23 +91,24 @@ function RegisterPage() {
   return (
     <div className='bg-gray-100 min-h-screen text-center'>
       <NotLoggedInHeader/>
-      <h2 className='text-2xl mt-10 font-bold'>Create a new account</h2>
+      <h2 className='text-2xl mt-10 font-bold'>Créer un nouveau compte</h2>
       <AuthCard>
         <form onSubmit={handleSubmit} className='flex flex-col mb-5'>
           <EmailInput value={email} onChange={e => setEmail(e.target.value)} />
-          <label className="text-left mb-2 font-medium">Username</label>
+          <label className="text-left mb-2 font-medium">Nom d'utilisateur</label>
           <input
             type="text"
-            placeholder="Username"
+            placeholder="Nom d'utilisateur"
             value={username}
             onChange={e => setUsername(e.target.value)}
             className="border border-gray-300 rounded-md p-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
+          <CityInput value={city} onChange={e => setCity(e.target.value)} />
           <PasswordInput value={password} onChange={e => setPassword(e.target.value)} />
           <PasswordInput
-            text='Re-type Password'
-            placeholderText='Re-type password'
+            text='Confirmer le mot de passe'
+            placeholderText='Confirmer le mot de passe'
             value={passwordConfirm}
             onChange={e => setPasswordConfirm(e.target.value)}
           />
