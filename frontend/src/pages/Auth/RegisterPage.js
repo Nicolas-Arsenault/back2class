@@ -4,11 +4,9 @@ import AuthCard from '../../components/Auth/AuthCard';
 import EmailInput from '../../components/Auth/EmailInput';
 import PasswordInput from '../../components/Auth/PasswordInput';
 import AuthButton from '../../components/Auth/AuthButton';
-import CityInput from '../../components/Auth/CityInput';
 
 function RegisterPage() {
   const [email, setEmail] = useState('');
-  const [city, setCity] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -41,7 +39,7 @@ function RegisterPage() {
       const response = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, username, password, city })
+        body: JSON.stringify({ email, username, password })
       });
 
       const data = await response.json();
@@ -111,7 +109,6 @@ function RegisterPage() {
             className="border border-gray-300 rounded-md p-2 mb-4 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             required
           />
-          <CityInput value={city} onChange={e => setCity(e.target.value)} />
           <PasswordInput value={password} onChange={e => setPassword(e.target.value)} />
           <PasswordInput
             text='Confirmer le mot de passe'

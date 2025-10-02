@@ -28,7 +28,7 @@ function ResetPasswordPage() {
     if (!token) return;
 
     if (newPassword !== confirmPassword) {
-      setMessage('Passwords do not match.');
+      setMessage('Les mots de passe ne correspondent pas.');
       setIsError(true);
       return;
     }
