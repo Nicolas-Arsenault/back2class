@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,6 +27,7 @@ public class Listing {
     private String title;
 
     @Lob
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     private Double price;
@@ -39,8 +41,11 @@ public class Listing {
     private LocalDateTime updatedAt = LocalDateTime.now();
 
     @OneToMany(mappedBy = "listing", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ListingImage> images;
+    private List<ListingImage> images = new ArrayList<>();
 
-    // getters & setters
+    public void addImage(ListingImage image){
+        images.add(image);
+        image.setListing(this);
+    }
 }
 

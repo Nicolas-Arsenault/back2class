@@ -1,8 +1,15 @@
 package com.ucat.api.controllers;
 
+import com.ucat.api.dto.ApiResponse;
+import com.ucat.api.dto.listings.CreateListingRequest;
+import com.ucat.api.dto.listings.ListingObjSafe;
+import com.ucat.api.dto.listings.UpdateListingRequest;
 import com.ucat.api.entities.Listing;
 import com.ucat.api.services.ListingService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -16,33 +23,69 @@ public class ListingController {
         this.listingService = listingService;
     }
 
-    // Create
+    // CREATE
     @PostMapping
-    public ResponseEntity<Listing> createListing(@RequestBody Listing listing) {
-        Listing created = listingService.createListing(listing);
-        return ResponseEntity.ok(created);
+    public ResponseEntity<ApiResponse> createListing(
+            @RequestBody CreateListingRequest request,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+
+        ApiResponse resp = listingService.createListing(request,userDetails.getUsername());
+
+        if(resp.isSuccess()){
+            return ResponseEntity.ok(resp);
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(resp);
+        }
     }
 
-    // Read (single listing)
+    // READ single listing
     @GetMapping("/{id}")
-    public ResponseEntity<Listing> getListing(@PathVariable Long id) {
-        Optional<Listing> listing = listingService.getListingById(id);
-        return listing.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<ListingObjSafe> getListing(@PathVariable Long id) throws Exception {
+
+        try{
+            Optional<Listing> listing = listingService.getListingById(id);
+            Listing realListing = listing.get();
+            return ResponseEntity.ok(new ListingObjSafe(realListing));
+        }
+        catch(Exception ex){
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    // Update
+    // UPDATE
     @PutMapping("/{id}")
-    public ResponseEntity<Listing> updateListing(@PathVariable Long id, @RequestBody Listing listing) {
-        Listing updated = listingService.updateListing(id, listing);
-        return ResponseEntity.ok(updated);
+    public ResponseEntity<ApiResponse> updateListing(
+            @PathVariable Long id,
+            @RequestBody UpdateListingRequest request,
+            @AuthenticationPrincipal UserDetails user) {
+
+        ApiResponse response = listingService.
+                    updateListing(id, request, user.getUsername());
+
+        if(response.isSuccess()){
+            return ResponseEntity.ok(response);
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        }
     }
 
-    // Delete
+    // DELETE
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteListing(@PathVariable Long id) {
-        listingService.deleteListing(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ApiResponse> deleteListing(@PathVariable Long id,
+                                              @AuthenticationPrincipal UserDetails user) {
+
+        ApiResponse resp = listingService.deleteListing(id, user.getUsername());
+
+        if(resp.isSuccess()){
+            return ResponseEntity.ok(resp);
+
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).
+                    body(resp);
+        }
     }
 }
-
