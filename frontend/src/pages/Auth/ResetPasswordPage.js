@@ -48,16 +48,16 @@ function ResetPasswordPage() {
 
       if (res.ok) {
         setIsError(false);
-        setMessage(data.message || 'Password reset successful! Redirecting to login...');
+        setMessage(data.message || 'Mot de passe réinitialisé avec succès ! Redirection vers la page de connexion...');
         // Redirect after short delay
         setTimeout(() => navigate('/login'), 4000);
       } else {
         setIsError(true);
-        setMessage(data.message || 'Failed to reset password.');
+        setMessage(data.message || 'Échec de la réinitialisation du mot de passe.');
       }
     } catch (err) {
       setIsError(true);
-      setMessage('Something went wrong. Please try again.');
+      setMessage('Une erreur est survenue. Veuillez réessayer.');
     } finally {
       setLoading(false);
     }
@@ -66,7 +66,7 @@ function ResetPasswordPage() {
   return (
     <div className='bg-gray-50 min-h-screen text-center'>
       <NotLoggedInHeader />
-      <h2 className='font-bold text-2xl mt-10'>Reset your password</h2>
+      <h2 className='font-bold text-2xl mt-10'>Réinitialiser votre mot de passe</h2>
 
       <AuthCard>
         <div className='flex flex-col gap-2'>
@@ -87,7 +87,7 @@ function ResetPasswordPage() {
             </p>
           )}
           {!isError && message && message.toLowerCase().includes('successful') && (
-            <p className="mt-2 text-blue-600 font-medium">Redirecting to login page...</p>
+            <p className="mt-2 text-emerald-600 font-medium">Redirection vers la page de connexion...</p>
           )}
 
         </div>

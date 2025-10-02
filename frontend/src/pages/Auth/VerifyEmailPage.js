@@ -29,15 +29,15 @@ const VerifyEmailPage = () => {
         const data = await response.json();
 
         if (response.ok) {
-          setMessage(data.message || 'Email verified successfully!');
+          setMessage(data.message || 'Courriel vérifié avec succès !');
           setIsError(false);
           setShouldRedirect(true);
         } else {
-          setMessage(data.message || 'Verification failed.');
+          setMessage(data.message || 'Échec de la vérification.');
           setIsError(true);
         }
       } catch (err) {
-        setMessage('Something went wrong. Please try again later.');
+        setMessage('Une erreur est survenue. Veuillez réessayer plus tard.');
         setIsError(true);
       }
     };
@@ -72,12 +72,12 @@ const VerifyEmailPage = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setResendMessage(data.message || 'Verification link sent!');
+        setResendMessage(data.message || 'Lien de vérification envoyé !');
       } else {
-        setResendMessage(data.message || 'Could not resend verification link.');
+        setResendMessage(data.message || 'Impossible de renvoyer le lien de vérification.');
       }
     } catch (err) {
-      setResendMessage('Something went wrong. Please try again later.');
+      setResendMessage('Une erreur est survenue. Veuillez réessayer plus tard.');
     } finally {
       setIsResending(false);
     }
@@ -91,13 +91,13 @@ const VerifyEmailPage = () => {
         </h1>
 
         {!isError && shouldRedirect && (
-          <p>You will be redirected to the login page in {countdown} second{countdown !== 1 ? 's' : ''}.</p>
+          <p>Vous allez être redirigé vers la page de connexion dans {countdown} seconde{countdown !== 1 ? 's' : ''}.</p>
         )}
 
         {isError && (
           <div className="mt-6 text-left">
             <p className="mb-2 text-sm text-gray-600">
-              Didn’t get the email? Enter your email to resend the verification link:
+              Vous n'avez pas reçu le courriel ? Entrez votre adresse e-mail pour renvoyer le lien de vérification :
             </p>
 
             <EmailInput
@@ -107,7 +107,7 @@ const VerifyEmailPage = () => {
             />
 
             <div className="mt-2 flex flex-col">
-              <AuthButton text={isResending ? 'Sending...' : 'Resend Link'} onClick={handleResend} />
+              <AuthButton text={isResending ? 'Envoi en cours...' : 'Renvoyer le lien'} onClick={handleResend} />
             </div>
 
             {resendMessage && (

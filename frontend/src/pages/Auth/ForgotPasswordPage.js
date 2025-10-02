@@ -26,17 +26,17 @@ function ForgotPasswordPage() {
 
       if (res.ok) {
         setIsError(false);
-        setMessage(data.message || 'If this email exists, a reset link will be sent.');
+        setMessage(data.message || 'Si le courriel existe, un lien de réinitialisation sera envoyé. (Vérifiez votre dossier de spam)');
       } else if (res.status === 429) { // TOO_MANY_REQUESTS
         setIsError(true);
-        setMessage(data.message || 'Please wait before requesting another reset link.');
+        setMessage(data.message || 'Veuillez attendre avant de demander un autre lien de réinitialisation.');
       } else {
         setIsError(true);
-        setMessage(data.message || 'Failed to send reset link.');
+        setMessage(data.message || "Échec de l'envoi du lien de réinitialisation.");
       }
     } catch (err) {
       setIsError(true);
-      setMessage('Something went wrong. Please try again.');
+      setMessage('Une erreur est survenue. Veuillez réessayer.');
     } finally {
       setLoading(false);
     }
@@ -45,12 +45,12 @@ function ForgotPasswordPage() {
   return (
     <div className='bg-gray-50 min-h-screen text-center'>
       <NotLoggedInHeader />
-      <h2 className='font-bold text-2xl mt-10'>Forgot your password</h2>
+      <h2 className='font-bold text-2xl mt-10'>Mot de passe oublié</h2>
 
       <AuthCard>
         <div className='flex flex-col gap-2'>
           <EmailInput value={email} onChange={e => setEmail(e.target.value)} />
-          <AuthButton text={loading ? 'Sending...' : 'Email me a link'} onClick={handleSubmit} />
+          <AuthButton text={loading ? 'Envoi...' : 'Envoyer un lien par courriel'} onClick={handleSubmit} />
           {message && (
             <p className={`mt-3 text-sm ${isError ? 'text-red-600' : 'text-green-600'}`}>
               {message}
@@ -60,8 +60,8 @@ function ForgotPasswordPage() {
       </AuthCard>
 
       <p className='mt-5'>
-        Already have an account?{' '}
-        <a href='/login' className='text-blue-600'>Sign in</a>
+        Vous avez déjà un compte ?{' '}
+        <a href='/login' className='text-emerald-600'>Se connecter</a>
       </p>
     </div>
   );

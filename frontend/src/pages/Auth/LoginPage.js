@@ -35,14 +35,14 @@ const LoginPage = () => {
 
       if (response.ok) {
         setMessageType("success");
-        setMessage("Login successful! Redirecting...");
+        setMessage("Connexion réussie! Redirection...");
         localStorage.setItem("token", data.token);
         setTimeout(() => {
           window.location.href = "/dashboard";
         }, 1000);
       } else {
         setMessageType("error");
-        setMessage(data.message || `Login failed. (${response.status})`);
+        setMessage(data.message || `Échec de la connexion. (${response.status})`);
 
         if (data.message?.toLowerCase().includes("verify your email")) {
           setShowResend(true);
@@ -52,7 +52,7 @@ const LoginPage = () => {
     } catch (error) {
       console.error("Network or fetch error:", error);
       setMessageType("error");
-      setMessage("Something went wrong. Please try again.");
+      setMessage("Une erreur réseau est survenue. Veuillez réessayer.");
     }
   };
 
@@ -75,7 +75,7 @@ const LoginPage = () => {
       }
     } catch {
       setMessageType("error");
-      setMessage("Failed to resend verification email.");
+      setMessage("Échec de l'envoi du courriel de vérification.");
     }
   };
 
@@ -93,15 +93,15 @@ const LoginPage = () => {
   return (
     <div className="text-center bg-slate-100 min-h-screen">
       <NotLoggedInHeader />
-      <h2 className="mt-10 font-bold text-2xl">Sign in to your account</h2>
+      <h2 className="mt-10 font-bold text-2xl">Se connecter à votre compte</h2>
 
       <AuthCard>
         <div className="flex flex-col">
           <EmailInput value={email} onChange={(e) => setEmail(e.target.value)} />
           <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)} />
-          <AuthButton onClick={handleLogin} text={"Sign in"} />
+          <AuthButton onClick={handleLogin} text={"Se connecter"} />
           <div className="justify-center flex flex-row">
-            <a href="/forgot-password" className="text-blue-600 mt-5">Forgot password?</a>
+            <a href="/forgot-password" className="text-emerald-600 mt-5">Mot de passe oublié ?</a>
           </div>
 
           {message && (
@@ -116,14 +116,14 @@ const LoginPage = () => {
 
           {showResend && (
             <p className="text-sm mt-2">
-              Didn't receive the verification email?{" "}
+              Vous n'avez pas reçu le courriel de vérification ?{" "}
               <span
                 onClick={cooldown === 0 ? handleResend : null}
                 className={`underline cursor-pointer ${
-                  cooldown > 0 ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:text-blue-800'
+                  cooldown > 0 ? 'text-gray-400 cursor-not-allowed' : 'text-emerald-600 hover:text-emerald-800'
                 }`}
               >
-                Click here to resend {cooldown > 0 ? `(${cooldown}s)` : ''}
+                Cliquez ici pour renvoyer {cooldown > 0 ? `(${cooldown}s)` : ''}
               </span>
             </p>
           )}
@@ -131,7 +131,7 @@ const LoginPage = () => {
       </AuthCard>
 
       <p className="mt-5">
-        Not a member? <a href="/register" className="text-blue-600">Sign up here</a>
+        Pas encore membre? <a href="/register" className="text-emerald-600">S'inscrire ici</a>
       </p>
     </div>
   );
