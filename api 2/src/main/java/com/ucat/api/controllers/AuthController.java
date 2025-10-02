@@ -1,10 +1,9 @@
 package com.ucat.api.controllers;
 
 import com.ucat.api.dto.*;
+import com.ucat.api.dto.auth.*;
 import com.ucat.api.services.AuthService;
-import com.ucat.api.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

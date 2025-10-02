@@ -1,6 +1,10 @@
 package com.ucat.api.services;
 
 import com.ucat.api.dto.*;
+import com.ucat.api.dto.auth.LoginRequest;
+import com.ucat.api.dto.auth.PasswordRecoveryRequest;
+import com.ucat.api.dto.auth.PasswordResetRequest;
+import com.ucat.api.dto.auth.SignUpRequest;
 import com.ucat.api.entities.User;
 import com.ucat.api.repositories.UserRepository;
 import com.ucat.api.utils.JwtUtil;

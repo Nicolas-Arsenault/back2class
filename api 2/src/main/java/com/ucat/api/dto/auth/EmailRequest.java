@@ -1,4 +1,4 @@
-package com.ucat.api.dto;
+package com.ucat.api.dto.auth;
 
 import lombok.Getter;
 import lombok.Setter;

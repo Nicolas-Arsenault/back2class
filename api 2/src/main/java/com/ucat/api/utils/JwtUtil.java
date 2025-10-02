@@ -50,9 +50,9 @@ public class JwtUtil {
         return(extractedUsername.equals(username) && !isTokenExpired(token));
     }
 
-    private boolean isTokenExpired(String token){
-        final Date expiration = getClaims(token).getIssuedAt();
-        return expiration.before(new Date());
+    private boolean isTokenExpired(String token) {
+        final Date expiration = getClaims(token).getExpiration(); // use expiration, not issuedAt
+        return expiration.before(new Date()); // expired if expiration is before now
     }
 
     private Claims getClaims(String token){
