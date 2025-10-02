@@ -49,7 +49,7 @@ public class ListingService {
                     null);
         }
 
-        if(dto.getImageUrls().size() > 5){
+        if(dto.getImageUrls() != null && dto.getImageUrls().size() > 5){
             return new ApiResponse(false,
                     "Too many images. Please select 5 or less.",
                     null);
@@ -97,7 +97,7 @@ public class ListingService {
                     null);
         }
 
-        if(dto.getImageUrls().size() > 5){
+        if(dto.getImageUrls() != null && dto.getImageUrls().size() > 5){
             return new ApiResponse(false,
                     "Please select 5 images or less.",
                     null);
