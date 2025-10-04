@@ -22,6 +22,16 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(name = "pending_email", unique = true)
+    private String pendingEmail;
+
+    @Column(name = "email_update_token")
+    private String emailUpdateToken;
+
+    private LocalDateTime emailUpdateTokenExpiry;
+
+    private LocalDateTime lastEmailUpdateRequestedAt;
+
     private String resetToken;
 
     private LocalDateTime lastPasswordResetRequestedAt;

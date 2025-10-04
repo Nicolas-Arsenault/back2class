@@ -17,10 +17,9 @@ public class ProfileController {
 
     private final ProfileService profileService;
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse> deleteProfile(@PathVariable Long id,
-                                                     @AuthenticationPrincipal UserDetails user){
-        ApiResponse resp = profileService.deleteAccount(id,user.getUsername());
+    @DeleteMapping
+    public ResponseEntity<ApiResponse> deleteProfile(@AuthenticationPrincipal UserDetails user){
+        ApiResponse resp = profileService.deleteAccount(user.getUsername());
         if(resp.isSuccess()){
             return ResponseEntity.ok(resp);
         }
@@ -30,11 +29,10 @@ public class ProfileController {
         }
     }
 
-    @PutMapping("/{id}/email")
-    public ResponseEntity<ApiResponse> updateEmail(@PathVariable Long id,
-                                                    @RequestBody String email,
+    @PutMapping("/email")
+    public ResponseEntity<ApiResponse> updateEmail(@RequestBody String email,
                                                    @AuthenticationPrincipal UserDetails user){
-        ApiResponse resp = profileService.updateEmail(id,email,user.getUsername());
+        ApiResponse resp = profileService.updateEmail(email,user.getUsername());
         if(resp.isSuccess()){
             return ResponseEntity.ok(resp);
         }

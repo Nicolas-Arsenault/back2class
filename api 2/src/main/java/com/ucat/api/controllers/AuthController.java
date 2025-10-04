@@ -6,6 +6,8 @@ import com.ucat.api.services.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -45,6 +47,23 @@ public class AuthController {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
+    }
+
+    @GetMapping("/confirm-pending-email")
+    public ResponseEntity<ApiResponse> confirmPendingEmail(@RequestParam("token") String token){
+        ApiResponse response = authService.verifyPendingEmail(token);
+        if(response.isSuccess()){
+            return ResponseEntity.ok(response);
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    @PostMapping("/resend-update-verification")
+    public ResponseEntity<ApiResponse> resendVerificationEmailUpdate(@RequestBody String email,
+                                                                     @AuthenticationPrincipal UserDetails user){
+
     }
 
     @PostMapping("/verifytoken")

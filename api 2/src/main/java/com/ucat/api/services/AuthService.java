@@ -29,7 +29,7 @@ public class AuthService {
     private static final int MAGIC_LINK_EXPIRATION_MINUTES = 15;
     private static final int MAGIC_LINK_RESEND_COOLDOWN_SECONDS = 30;
 
-    private String generateMagicToken() {
+    String generateMagicToken() {
         return UUID.randomUUID().toString();
     }
 
@@ -107,6 +107,40 @@ public class AuthService {
         return new ApiResponse(false, "Token is not valid.", null);
     }
 
+    public void sendEmailChangeVerification(String newEmail, String token) {
+        String link = "http://localhost:3000/confirm-pending-email?token=" + token;
+        smtpUtil.send(newEmail,"Verify your email!",
+                "Click the link to verify your email: " + link
+                );
+    }
+
+    public ApiResponse resendUpdateEmailMagicLink(String email){
+        Optional<User> userOpt = userRepository.findByEmailUpdateToken(email);
+        if (userOpt.isEmpty()) {
+            return new ApiResponse(false, "User not found.", null);
+        }
+
+        User user = userOpt.get();
+        LocalDateTime now = LocalDateTime.now();
+
+        if (user.getLastEmailUpdateRequestedAt() != null &&
+                user.getLastEmailUpdateRequestedAt().plusSeconds(MAGIC_LINK_RESEND_COOLDOWN_SECONDS).isAfter(now)) {
+            return new ApiResponse(false, "Please wait before requesting another verification link.", null);
+        }
+
+        String token = generateMagicToken();
+        user.setEmailUpdateToken(token);
+        user.setEmailUpdateTokenExpiry(now.plusMinutes(MAGIC_LINK_EXPIRATION_MINUTES));
+        user.setLastEmailUpdateRequestedAt(now);
+        userRepository.save(user);
+
+        String link = "http://localhost:3000/confirm-pending-email?token=" + token;
+        smtpUtil.send(email, "Your new verification link",
+                "Click the link to verify your email: " + link);
+
+        return new ApiResponse(true, "A new verification link has been sent to your email.", null);
+    }
+
     public ApiResponse resendMagicLink(String email) {
         Optional<User> userOpt = userRepository.findByEmail(email);
         if (userOpt.isEmpty()) {
@@ -180,5 +214,27 @@ public class AuthService {
         userRepository.save(user);
 
         return new ApiResponse(true, "Password successfully reset.", null);
+    }
+
+    public ApiResponse verifyPendingEmail(String token) {
+
+        Optional<User> userOpt = userRepository.findByEmailUpdateToken(token);
+        if (userOpt.isEmpty()) {
+            return new ApiResponse(false, "Invalid or expired verification link.", null);
+        }
+
+        User user = userOpt.get();
+
+        if (user.getEmailUpdateTokenExpiry().isBefore(LocalDateTime.now())) {
+            return new ApiResponse(false, "Verification link has expired. Please request a new one.", null);
+        }
+
+        user.setEmail(user.getPendingEmail());
+        user.setEmailUpdateToken(null);
+        user.setEmailUpdateTokenExpiry(null);
+        user.setPendingEmail(null);
+        userRepository.save(user);
+
+        return new ApiResponse(true, "Email successfully changed!", null);
     }
 }
