@@ -8,7 +8,7 @@ const VerifyEmailPage = () => {
   const token = searchParams.get('token');
   const navigate = useNavigate();
 
-  const [message, setMessage] = useState('Verifying your email...');
+  const [message, setMessage] = useState('Vérification de votre email...');
   const [isError, setIsError] = useState(false);
   const [countdown, setCountdown] = useState(5);
   const [shouldRedirect, setShouldRedirect] = useState(false);
