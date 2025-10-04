@@ -13,4 +13,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
     Optional<User> findByMagicToken(String token);
 
     Optional<User> findByResetToken(String resetToken);
+
+    Optional<User> findByEmailUpdateToken(String token);
 }
