@@ -9,6 +9,7 @@ import VerifyEmailPage from "./pages/Auth/VerifyEmailPage";
 import ProtectedRoute from "./components/Security/ProtectedRoute";
 import DashboardPage from "./pages/App/DashboardPage";
 import AuthRedirectRoute from "./components/Security/AuthRedirectRoute";
+import ComptePage from "./pages/App/ComptePage";
 
 function App() {
   return(
@@ -29,6 +30,10 @@ function App() {
         <Route path="/dashboard"
         element={<ProtectedRoute>
           <DashboardPage/>
+        </ProtectedRoute>}/>
+        <Route path="/compte"
+        element={<ProtectedRoute>
+          <ComptePage></ComptePage>
         </ProtectedRoute>}/>
       </Routes>
     </Router>
