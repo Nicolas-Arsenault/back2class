@@ -60,11 +60,16 @@ public class AuthController {
         }
     }
 
-    //@PostMapping("/resend-update-verification")
-    //public ResponseEntity<ApiResponse> resendVerificationEmailUpdate(@RequestBody String email,
-     //                                                                @AuthenticationPrincipal UserDetails user){
-
-    //}
+    @PostMapping("/resend-update-verification")
+    public ResponseEntity<ApiResponse> resendVerificationEmailUpdate(@RequestBody String email,
+                                                                     @AuthenticationPrincipal UserDetails user){
+        ApiResponse response = authService.resendUpdateEmailMagicLink(email);
+        if (response.isSuccess()) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body(response);
+        }
+    }
 
     @PostMapping("/verifytoken")
     public ResponseEntity<ApiResponse> verifyToken(@RequestBody Map<String,String> body){

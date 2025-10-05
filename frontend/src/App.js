@@ -9,6 +9,8 @@ import VerifyEmailPage from "./pages/Auth/VerifyEmailPage";
 import ProtectedRoute from "./components/Security/ProtectedRoute";
 import DashboardPage from "./pages/App/DashboardPage";
 import AuthRedirectRoute from "./components/Security/AuthRedirectRoute";
+import ComptePage from "./pages/App/ComptePage";
+import ConfirmPendingEmailPage from "./pages/Auth/ConfirmPendingEmailPage";
 
 function App() {
   return(
@@ -30,6 +32,12 @@ function App() {
         element={<ProtectedRoute>
           <DashboardPage/>
         </ProtectedRoute>}/>
+        <Route path="/compte"
+        element={<ProtectedRoute>
+          <ComptePage></ComptePage>
+        </ProtectedRoute>}/>
+        <Route path="/confirm-pending-email"
+        element={<ConfirmPendingEmailPage/>}/>
       </Routes>
     </Router>
   )
