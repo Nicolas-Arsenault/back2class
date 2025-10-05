@@ -1,8 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 
 function LoggedInNavBar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+    const dropdownRef = useRef(null);
+
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsProfileDropdownOpen(false);
+            }
+        };
+
+        if (isProfileDropdownOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isProfileDropdownOpen]);
 
     // afficher menu burger
     const toggleMenu = () => {
@@ -39,7 +58,7 @@ function LoggedInNavBar() {
                 </button>
                 {/* Desktop Navigation */}
                 <div className='hidden md:block' id="navbar-default">
-                    <div className="space-x-4" >
+                    <div className="flex items-center space-x-4" >
                         <Link
                             to="/publications"
                             className="px-4 py-2 text-sm font-medium text-white bg-emerald-600 rounded hover:bg-emerald-700"
@@ -47,16 +66,44 @@ function LoggedInNavBar() {
                             Publier un livre
                         </Link>
                         <Link
-                            to="/compte"
+                            to="/messages"
                             className="px-4 py-2 text-sm font-medium text-emerald-600 border border-emerald-600 rounded hover:bg-emerald-50"
                         >
-                            Mon compte
+                            Messages
                         </Link>
-                        <Link className="px-4 py-2 text-sm font-medium text-emerald-600 border border-emerald-600 rounded hover:bg-emerald-50"
-                            onClick={handleLogout}
-                        >
-                            Se déconnecter
-                        </Link>
+                        
+                        <div className="relative" ref={dropdownRef}>
+                            <button 
+                                onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
+                                className="relative flex rounded-full focus:outline-none p-1 border border-emerald-600 hover:bg-emerald-50"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" className="w-8 h-8 ">
+                                    <circle cx="16" cy="16" r="16" fill="transparent"/>
+                                    <path d="M12.73 13.1a3.271 3.271 0 1 1 3.27 3.2 3.237 3.237 0 0 1-3.27-3.2zm-2.73 9.069h1.088a4.91 4.91 0 0 1 9.818 0h1.094a5.884 5.884 0 0 0-3.738-5.434 4.238 4.238 0 0 0 2.1-3.635 4.366 4.366 0 0 0-8.73 0 4.238 4.238 0 0 0 2.1 3.635 5.878 5.878 0 0 0-3.732 5.434z" fill="#059669"/>
+                                    <path fill="none" d="M0 0h32v32h-32z"/>
+                                </svg>
+                            </button>
+                            {isProfileDropdownOpen && (
+                                <div className="absolute border-1 right-0 z-10 mt-5 w-48 origin-top-right rounded-md bg-white  shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                    <Link 
+                                        to="/compte" 
+                                        className="block m-2 text-center px-3 py-2 text-sm font-medium text-emerald-600 hover:bg-emerald-50 rounded"
+                                        onClick={() => setIsProfileDropdownOpen(false)}
+                                    >
+                                        Mon compte
+                                    </Link>
+                                    <Link
+                                        onClick={() => {
+                                            handleLogout();
+                                            setIsProfileDropdownOpen(false);
+                                        }}
+                                        className="block m-2 text-center px-3 py-2 text-sm font-medium text-emerald-600 hover:bg-emerald-50 rounded"
+                                    >
+                                        Se déconnecter
+                                    </Link>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -69,14 +116,21 @@ function LoggedInNavBar() {
                     className="block px-3 py-2 text-sm font-medium text-emerald-600 hover:bg-emerald-50 rounded"
                     onClick={() => setIsMenuOpen(false)}
                 >
-                Publier un livre
+                    Publier un livre
+                </Link>
+                <Link
+                    to="/messages"
+                    className="block px-3 py-2 text-sm font-medium text-emerald-600 hover:bg-emerald-50 rounded"
+                    onClick={() => setIsMenuOpen(false)}
+                >
+                    Messages
                 </Link>
                 <Link
                     to="/compte"
                     className="block px-3 py-2 text-sm font-medium text-emerald-600 hover:bg-emerald-50 rounded"
                     onClick={() => setIsMenuOpen(false)}
                 >
-                Mon compte
+                    Mon compte
                 </Link>
                 <Link className="block px-3 py-2 text-sm font-medium text-emerald-600 hover:bg-emerald-50 rounded"
                     onClick={() => {

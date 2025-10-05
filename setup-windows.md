@@ -22,7 +22,9 @@ cd "C:\Users\meterpeter\Documents\UCAT-Prep\api 2"
 Start Nginx with your configuration:
 ```
 # Copy your config to nginx directory or use -c flag
-nginx -c "C:\Users\meterpeter\Documents\UCAT-Prep\nginx-dev.conf"
+cd C:\ProgramData\nginx-1.28.0
+
+nginx.exe -c "C:\Users\meterpeter\UCAT-Prep\nginx-dev-windows.conf"
 
 # Or if nginx is installed via Chocolatey:
 nginx -c "C:\Users\meterpeter\Documents\UCAT-Prep\nginx-dev.conf" -g "daemon off;"
