@@ -1,6 +1,7 @@
 package com.ucat.api.controllers;
 
 import com.ucat.api.dto.ApiResponse;
+import com.ucat.api.dto.EmailChangeRequest;
 import com.ucat.api.services.ProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,10 +30,17 @@ public class ProfileController {
         }
     }
 
+    @GetMapping("/username")
+    @ResponseBody
+    public String getUsername(@AuthenticationPrincipal UserDetails user){
+        return user.getUsername();
+    }
+
+
     @PutMapping("/email")
-    public ResponseEntity<ApiResponse> updateEmail(@RequestBody String email,
+    public ResponseEntity<ApiResponse> updateEmail(@RequestBody EmailChangeRequest email,
                                                    @AuthenticationPrincipal UserDetails user){
-        ApiResponse resp = profileService.updateEmail(email,user.getUsername());
+        ApiResponse resp = profileService.updateEmail(email.getEmail(),user.getUsername());
         if(resp.isSuccess()){
             return ResponseEntity.ok(resp);
         }
