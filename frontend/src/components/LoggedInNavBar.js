@@ -30,7 +30,7 @@ function LoggedInNavBar() {
 
     // afficher le bouton Accueil (retour au dashboard) si le user n'est pas sur la page dashboard
     const ifPageIsNotDashboardMenuBurger = () => {
-        if (window.location.pathname != '/dashboard'){
+        if (window.location.pathname !== '/dashboard'){
             return (
                 <Link
                     to="/dashboard"

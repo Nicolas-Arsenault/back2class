@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import LoggedInNavBar from '../../components/LoggedInNavBar';
 import FilterButton from '../../components/FilterButton';
 
