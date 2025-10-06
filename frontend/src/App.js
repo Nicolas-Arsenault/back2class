@@ -11,6 +11,7 @@ import DashboardPage from "./pages/App/DashboardPage";
 import AuthRedirectRoute from "./components/Security/AuthRedirectRoute";
 import ComptePage from "./pages/App/ComptePage";
 import ConfirmPendingEmailPage from "./pages/Auth/ConfirmPendingEmailPage";
+import PublierLivrePage from "./pages/App/PublierLivrePage";
 
 function App() {
   return(
@@ -38,6 +39,10 @@ function App() {
         </ProtectedRoute>}/>
         <Route path="/confirm-pending-email"
         element={<ConfirmPendingEmailPage/>}/>
+        <Route path="/publications"
+        element={<ProtectedRoute>
+          <PublierLivrePage/>
+        </ProtectedRoute>}/>
       </Routes>
     </Router>
   )

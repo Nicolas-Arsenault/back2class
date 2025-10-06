@@ -26,8 +26,7 @@ public class Listing {
     @Column(nullable = false, length = 255)
     private String title;
 
-    @Lob
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String description;
 
     private Double price;

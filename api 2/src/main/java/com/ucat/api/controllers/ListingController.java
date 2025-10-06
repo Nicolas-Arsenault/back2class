@@ -12,6 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -71,6 +72,13 @@ public class ListingController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
     }
+
+    // GET listings for the current user
+    @GetMapping("/my")
+    public ResponseEntity<?> getMyListings(@AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(listingService.getListingsByUsername(userDetails.getUsername()));
+    }
+
 
     // DELETE
     @DeleteMapping("/{id}")

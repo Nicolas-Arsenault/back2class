@@ -2,6 +2,7 @@ package com.ucat.api.services;
 
 import com.ucat.api.dto.ApiResponse;
 import com.ucat.api.dto.listings.CreateListingRequest;
+import com.ucat.api.dto.listings.ListingObjSafe;
 import com.ucat.api.dto.listings.UpdateListingRequest;
 import com.ucat.api.entities.Category;
 import com.ucat.api.entities.Listing;
@@ -14,7 +15,9 @@ import com.ucat.api.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ListingService {
@@ -175,4 +178,15 @@ public class ListingService {
     public java.util.List<Listing> getAllListings() {
         return listingRepository.findAll();
     }
+
+    public List<ListingObjSafe> getListingsByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        List<Listing> listings = listingRepository.findByUser(user);
+        return listings.stream()
+                .map(ListingObjSafe::new)
+                .collect(Collectors.toList());
+    }
+
 }
