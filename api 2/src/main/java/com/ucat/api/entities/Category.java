@@ -1,5 +1,6 @@
 package com.ucat.api.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,7 +19,9 @@ public class Category {
 
     // Bi-directional (optional)
     @OneToMany(mappedBy = "category")
+    @JsonIgnore
     private List<Listing> listings;
+
 
     // getters & setters
 }
